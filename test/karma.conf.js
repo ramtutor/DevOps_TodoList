@@ -41,15 +41,27 @@ module.exports = function(config) {
       "test/spec/**/*.js"
     ],
 
+	// preprocess matching files before serving them to the browser
+    preprocessors: {'src/**/*.js':['coverage'],
+                    'test/**/*.js':['coverage'],
+                    'app/**/*.js':['coverage']
+    },
+
+
+	coverageReporter: {
+        type:'html',
+        dir:'coverage/'
+    },
+
     // list of files / patterns to exclude
     exclude: [
     ],
     
-    reporters: ['progress', 'html'],
+    reporters: ['progress', 'coverage','html'],
  
     // the default configuration 
     htmlReporter: {
-      //outputDir: 'test/report/', // where to put the reports  
+      outputDir: 'test/report/', // where to put the reports  
       outputFile: 'test/report/ReportSummary/test_report.html',
       templatePath: null, // set if you moved jasmine_template.html 
       focusOnFailures: false, // reports show failures on start 
@@ -76,9 +88,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: [
-      "PhantomJS"
-    ],
+    browsers: ["PhantomJS","Chrome", "Chrome_without_security"],
 
     // Which plugins to enable
     plugins: [
@@ -86,12 +96,13 @@ module.exports = function(config) {
       "karma-safari-launcher",
       "karma-phantomjs-launcher",
       "karma-jasmine",
-     "karma-htmlfile-reporter"
+      "karma-htmlfile-reporter",
+	  "karma-coverage"
     ],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false,
+    singleRun: true,//false,
 
     colors: true,
 
